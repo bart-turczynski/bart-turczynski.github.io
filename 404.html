@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Page moved</title>
+<script>
+(function () {
+  var sites = {
+  "rurl": "https://bart-turczynski.gitlab.io/rurl/",
+  "pagerankr": "https://pagerankr-63ad30.gitlab.io/",
+  "sitemapr": "https://sitemapr-eca867.gitlab.io/",
+  "robotstxtr": "https://robotstxtr-de6c15.gitlab.io/"
+};
+  var m = location.pathname.match(/^\/([^\/]+)(\/.*)?$/);
+  var root = m && Object.prototype.hasOwnProperty.call(sites, m[1]) ? sites[m[1]] : null;
+  if (!root) return;
+  var target = root + (m[2] || "/").replace(/^\//, "") + location.search + location.hash;
+  location.replace(target);
+  document.addEventListener("DOMContentLoaded", function () {
+    var a = document.getElementById("moved");
+    a.href = target;
+    a.textContent = target;
+    document.getElementById("hint").hidden = false;
+  });
+})();
+</script>
+<style>
+:root { color-scheme: light dark; }
+body { font: 16px/1.5 system-ui, sans-serif; max-width: 40rem; margin: 3rem auto; padding: 0 16px; }
+</style>
+</head>
+<body>
+<h1>Page moved</h1>
+<p id="hint" hidden>This page has moved to <a id="moved" href="/">its new address</a>.</p>
+<p>The package documentation now lives on GitLab Pages:</p>
+<ul>
+<li><a href="https://bart-turczynski.gitlab.io/rurl/">rurl</a></li>
+<li><a href="https://pagerankr-63ad30.gitlab.io/">pagerankr</a></li>
+<li><a href="https://sitemapr-eca867.gitlab.io/">sitemapr</a></li>
+<li><a href="https://robotstxtr-de6c15.gitlab.io/">robotstxtr</a></li>
+</ul>
+</body>
+</html>
