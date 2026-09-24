@@ -1,0 +1,12 @@
+pkg,old_path,new_rel,match_type,note
+rurl,CLAUDE.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
+pagerankr,CLAUDE.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
+pagerankr,FP_CLAUDE.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
+sitemapr,AGENTS.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
+sitemapr,CLAUDE.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
+sitemapr,FP_AGENTS.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
+sitemapr,FP_CLAUDE.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
+robotstxtr,AGENTS.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
+robotstxtr,CLAUDE.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
+robotstxtr,FP_AGENTS.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
+robotstxtr,FP_CLAUDE.html,CONTRIBUTING.html,section-fallback,agent instruction file no longer rendered; contributor docs are its human-facing successor
