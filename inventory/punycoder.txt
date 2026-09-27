@@ -1,0 +1,35 @@
+# old URLs under https://bart-turczynski.github.io/punycoder/ (path relative to prefix; '' = root)
+# The old GitHub Pages site was gone before this inventory was taken (404, and no
+# usable Wayback capture), so the paths come from the current GitLab Pages sitemap.xml
+# (source `new-sitemap`): the same pkgdown layout the old site published. 404.html
+# forwards any other path under this prefix.
+# path	status	sources
+	200	root
+404.html	200	new-sitemap
+ACKNOWLEDGMENTS.html	200	new-sitemap
+ARCHITECTURE.html	200	new-sitemap
+CODE_OF_CONDUCT.html	200	new-sitemap
+CONTRIBUTING.html	200	new-sitemap
+DECISIONS.html	200	new-sitemap
+LICENSE-text.html	200	new-sitemap
+LICENSE.html	200	new-sitemap
+SECURITY.html	200	new-sitemap
+THIRD_PARTY_NOTICES.html	200	new-sitemap
+articles/index.html	200	new-sitemap
+articles/punycoder-intro.html	200	new-sitemap
+authors.html	200	new-sitemap
+index.html	200	new-sitemap
+news/index.html	200	new-sitemap
+reference/host_normalize.html	200	new-sitemap
+reference/index.html	200	new-sitemap
+reference/is_idn.html	200	new-sitemap
+reference/is_punycode.html	200	new-sitemap
+reference/normalization_profile_info.html	200	new-sitemap
+reference/print.punycoder_validation.html	200	new-sitemap
+reference/print.punycoder_validation_summary.html	200	new-sitemap
+reference/puny_decode.html	200	new-sitemap
+reference/puny_encode.html	200	new-sitemap
+reference/punycoder-package.html	200	new-sitemap
+reference/summary.punycoder_validation.html	200	new-sitemap
+reference/unicode_versions.html	200	new-sitemap
+reference/validate_domain.html	200	new-sitemap

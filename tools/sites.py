@@ -6,8 +6,10 @@ OLD_ORIGIN = "https://bart-turczynski.github.io"
 SITES = {
     "rurl": "https://bart-turczynski.gitlab.io/rurl/",
     "pagerankr": "https://pagerankr-63ad30.gitlab.io/",
-    "sitemapr": "https://sitemapr-eca867.gitlab.io/",
-    "robotstxtr": "https://robotstxtr-de6c15.gitlab.io/",
+    "sitemapr": "https://bart-turczynski.gitlab.io/sitemapr/",
+    "robotstxtr": "https://bart-turczynski.gitlab.io/robotstxtr/",
+    "punycoder": "https://bart-turczynski.gitlab.io/punycoder/",
+    "pslr": "https://bart-turczynski.gitlab.io/pslr/",
 }
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "

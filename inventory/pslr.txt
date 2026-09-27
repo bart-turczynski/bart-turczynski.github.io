@@ -1,0 +1,36 @@
+# old URLs under https://bart-turczynski.github.io/pslr/ (path relative to prefix; '' = root)
+# The old GitHub Pages site was gone before this inventory was taken (404, and no
+# usable Wayback capture), so the paths come from the current GitLab Pages sitemap.xml
+# (source `new-sitemap`): the same pkgdown layout the old site published. 404.html
+# forwards any other path under this prefix.
+# path	status	sources
+	200	root
+404.html	200	new-sitemap
+ACKNOWLEDGMENTS.html	200	new-sitemap
+CODE_OF_CONDUCT.html	200	new-sitemap
+CONTRIBUTING.html	200	new-sitemap
+LICENSE-text.html	200	new-sitemap
+LICENSE.html	200	new-sitemap
+SECURITY.html	200	new-sitemap
+articles/index.html	200	new-sitemap
+articles/introduction.html	200	new-sitemap
+authors.html	200	new-sitemap
+index.html	200	new-sitemap
+news/index.html	200	new-sitemap
+reference/index.html	200	new-sitemap
+reference/is_public_suffix.html	200	new-sitemap
+reference/psl_cache_prune.html	200	new-sitemap
+reference/psl_diff.html	200	new-sitemap
+reference/psl_engine.html	200	new-sitemap
+reference/psl_refresh.html	200	new-sitemap
+reference/psl_reminder.html	200	new-sitemap
+reference/psl_rules.html	200	new-sitemap
+reference/psl_snapshots.html	200	new-sitemap
+reference/psl_status.html	200	new-sitemap
+reference/psl_use.html	200	new-sitemap
+reference/psl_version.html	200	new-sitemap
+reference/pslr-package.html	200	new-sitemap
+reference/public_suffix.html	200	new-sitemap
+reference/public_suffix_rule.html	200	new-sitemap
+reference/registrable_domain.html	200	new-sitemap
+reference/suffix_extract.html	200	new-sitemap
