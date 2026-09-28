@@ -9,15 +9,14 @@ site home.
 | Old prefix | Canonical docs |
 |---|---|
 | `/rurl/` | https://bart-turczynski.gitlab.io/rurl/ |
-| `/pagerankr/` | https://pagerankr-63ad30.gitlab.io/ |
+| `/pagerankr/` | https://bart-turczynski.gitlab.io/pagerankr/ |
 | `/sitemapr/` | https://bart-turczynski.gitlab.io/sitemapr/ |
 | `/robotstxtr/` | https://bart-turczynski.gitlab.io/robotstxtr/ |
 | `/punycoder/` | https://bart-turczynski.gitlab.io/punycoder/ |
 | `/pslr/` | https://bart-turczynski.gitlab.io/pslr/ |
 
-Every package moves to the `bart-turczynski.gitlab.io/<pkg>/` namespace path
-(SEOR-hcmtspmv). pagerankr follows once CRAN has decided on 0.1.0
-(SEOR-vujgdjfv); update its row in `tools/sites.py`, then rebuild.
+Every package lives at the `bart-turczynski.gitlab.io/<pkg>/` namespace path
+(SEOR-hcmtspmv, SEOR-vujgdjfv).
 
 ## How it is published
 

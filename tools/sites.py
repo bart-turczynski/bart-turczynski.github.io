@@ -5,7 +5,7 @@ OLD_ORIGIN = "https://bart-turczynski.github.io"
 # package prefix on the old user site -> canonical docs root (always ends in "/")
 SITES = {
     "rurl": "https://bart-turczynski.gitlab.io/rurl/",
-    "pagerankr": "https://pagerankr-63ad30.gitlab.io/",
+    "pagerankr": "https://bart-turczynski.gitlab.io/pagerankr/",
     "sitemapr": "https://bart-turczynski.gitlab.io/sitemapr/",
     "robotstxtr": "https://bart-turczynski.gitlab.io/robotstxtr/",
     "punycoder": "https://bart-turczynski.gitlab.io/punycoder/",
