@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "schedule": ["before 6am on monday"],
+  "prConcurrentLimit": 5,
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "description": "Group all npm bumps into a single weekly MR rather than one per package. Mirrors the old Dependabot `npm` group.",
+      "matchManagers": ["npm"],
+      "groupName": "npm",
+      "commitMessagePrefix": "deps:"
+    },
+    {
+      "description": "Group CI image and Node pins into a single weekly MR. Replaces the old Dependabot `github-actions` group, since GitLab CI pins Docker images rather than actions.",
+      "matchManagers": ["gitlabci", "gitlabci-include", "nodenv"],
+      "groupName": "ci images",
+      "commitMessagePrefix": "ci:"
+    }
+  ]
+}

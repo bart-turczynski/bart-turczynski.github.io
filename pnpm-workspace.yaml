@@ -1,0 +1,7 @@
+# pnpm 11 blocks dependency build scripts by default and errors on unapproved
+# ones (ERR_PNPM_IGNORED_BUILDS) during the pre-script deps check. tsx depends
+# on esbuild, whose postinstall fetches its native binary, so approve it here.
+# (allowBuilds is pnpm 11's replacement for the old package.json
+# pnpm.onlyBuiltDependencies field.)
+allowBuilds:
+  esbuild: true
