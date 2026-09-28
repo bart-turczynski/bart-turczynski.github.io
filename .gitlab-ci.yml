@@ -1,0 +1,97 @@
+# Verification gate for bart-turczynski.github.io — the same chain the pre-push hook
+# runs locally, so CI and a developer's machine agree.
+#
+# GitHub Actions provisioned toolchains with `uses:` steps (actions/setup-node,
+# pnpm/action-setup). GitLab has no action ecosystem, so the job starts from a
+# Docker image that already carries Node and enables pnpm through corepack.
+# Nothing cross-checks the pins for you: keep the image tag in step with
+# `.node-version`, and the corepack pin with `packageManager` in package.json.
+
+stages:
+  - verify
+  - maintenance
+
+default:
+  interruptible: true
+
+verify:
+  stage: verify
+  # Not the -slim variant: `pnpm check` also runs the Python redirect
+  # self-check (tools/check.py), and the full image ships python3.
+  image: node:24-bookworm
+  variables:
+    # GitLab only caches paths under $CI_PROJECT_DIR, and pnpm's
+    # content-addressable store defaults to $HOME — so move it into the build
+    # directory, then point the cache at it. A miss (a cold scaffold with no
+    # committed lockfile) just falls through to a normal install.
+    PNPM_STORE_DIR: "$CI_PROJECT_DIR/.pnpm-store"
+  cache:
+    key:
+      files:
+        - pnpm-lock.yaml
+    paths:
+      - .pnpm-store
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    # Without these, triggering a pipeline by hand on a feature branch — from
+    # the UI or the API — resolves to no jobs at all and GitLab rejects it as
+    # "the resulting pipeline would have been empty".
+    - if: $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_PIPELINE_SOURCE == "api"
+  before_script:
+    - corepack enable && corepack prepare pnpm@11 --activate
+    - pnpm config set store-dir "$PNPM_STORE_DIR"
+    - node --version && pnpm --version
+  script:
+    - pnpm install
+    - pnpm check
+
+# --------------------------------------------------------------------------
+# renovate — replaces Dependabot, which is GitHub-only
+#
+# Needs a RENOVATE_TOKEN CI/CD variable (a project access token with `api` and
+# `write_repository` scope). Until that exists the job skips itself with a
+# message instead of failing, so it is never wired to merge requests: scheduled
+# or manual only. What it bumps is configured in renovate.json.
+#
+# The weekly cadence Dependabot declared in its own YAML is NOT in this file.
+# GitLab keeps pipeline schedules in project settings (CI/CD > Schedules), so
+# add one there; the rule below makes a scheduled pipeline run this job.
+# --------------------------------------------------------------------------
+
+renovate:
+  stage: maintenance
+  image: renovate/renovate:41
+  rules:
+    # Blocking on a schedule: once a token exists, a renovate failure is a real
+    # failure and must be visible. The missing-token case is handled in
+    # `script:` rather than by a rule — a rule that skips the job can leave a
+    # scheduled pipeline with no jobs at all, which GitLab rejects outright.
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    # Under `rules`, `when: manual` defaults to `allow_failure: false` (unlike a
+    # job-level `when: manual`), which would leave a hand-triggered pipeline
+    # sitting *blocked* on this job. This line is load-bearing.
+    - if: $CI_PIPELINE_SOURCE == "web"
+      when: manual
+      allow_failure: true
+  variables:
+    RENOVATE_PLATFORM: gitlab
+    RENOVATE_ENDPOINT: $CI_API_V4_URL
+    RENOVATE_AUTODISCOVER: "false"
+    RENOVATE_REPOSITORIES: $CI_PROJECT_PATH
+    LOG_LEVEL: info
+  script:
+    # Skip loudly rather than fail when the token is missing: a fresh project has
+    # no RENOVATE_TOKEN by construction, and a red scheduled pipeline for a setup
+    # step nobody has done yet is noise. Every *other* renovate failure — bad
+    # config, API error, auth rejected — now fails the pipeline, which is the
+    # point of dropping `allow_failure` above.
+    - |
+      if [ -z "$RENOVATE_TOKEN" ]; then
+        echo "RENOVATE_TOKEN is not set - skipping renovate."
+        echo "Add it under Settings > CI/CD > Variables: a project access token"
+        echo "with 'api' and 'write_repository' scope."
+        exit 0
+      fi
+    - renovate

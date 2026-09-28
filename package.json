@@ -1,0 +1,23 @@
+{
+  "name": "bart-turczynski.github.io",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.6.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "features": "cucumber-js",
+    "redirects": "python3 tools/check.py --offline",
+    "check": "pnpm typecheck && pnpm features && pnpm redirects"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.0.0",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.22.0",
+    "typescript": "^6.0.0"
+  }
+}

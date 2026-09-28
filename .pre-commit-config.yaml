@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        args: ['--maxkb=5120']
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-toml
+      - id: mixed-line-ending
+      - id: check-case-conflict
+  - repo: local
+    hooks:
+      - id: check-design
+        name: design-doc hygiene
+        entry: python3 scripts/check-design.py
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]
+      - id: verify
+        name: verify (mirrors CI)
+        # pnpm check is substituted into this bash -c "..." wrapper, so
+        # it MUST NOT contain double quotes — they would collide with the wrapping
+        # quotes. A template whose verify command needs quotes ships its own
+        # .pre-commit-config.yaml override instead (see the r overlay, which calls
+        # `Rscript -e` with the command as a single argv element, no shell).
+        entry: bash -c "pnpm check"
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]
+        verbose: true

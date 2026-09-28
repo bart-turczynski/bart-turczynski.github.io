@@ -1,3 +1,26 @@
+.env
+.env.*
+*.log
+.DS_Store
+
+.fp/
+_scratch/
+
+# Machine output: logs, build junk, agent working files. Deletable at any
+# instant — `sh scripts/clean-tmp.sh` empties it.
+tmp/
+
+# Heavy artifacts — never commit (a big blob bloats .git history even after deletion).
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+node_modules/
+dist/
+coverage/
+.pnpm-store/
+
 __pycache__/
 *.pyc
-.DS_Store

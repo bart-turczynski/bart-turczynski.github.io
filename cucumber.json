@@ -1,0 +1,10 @@
+{
+  "default": {
+    "import": ["features/support/register-tsx.mjs", "features/**/*.ts"],
+    "format": ["progress"]
+  },
+  "manual": {
+    "import": ["features/support/register-tsx.mjs", "features/**/*.ts"],
+    "format": ["summary"]
+  }
+}
