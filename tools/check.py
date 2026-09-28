@@ -10,7 +10,8 @@ Offline checks:
   - every old page in inventory/<pkg>.txt (old status 200) has a stub, and
     no stub exists without a row;
   - 404.html carries exactly the package -> host map in tools/sites.py, and the
-    root index.html links every host; .nojekyll exists.
+    hand-written index.html links every host; .nojekyll exists.
+All site paths are relative to the published directory (docs/).
 Online check (skip with --offline): every distinct new_url returns 200 (GET,
 redirects followed).
 
@@ -27,9 +28,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 from build_map import is_page, load_inventory, stub_rel  # noqa: E402
 from generate import stub_html  # noqa: E402
 from http_util import fetch  # noqa: E402
-from sites import SITES  # noqa: E402
+from sites import SITE_DIR, SITES  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SITE = os.path.join(ROOT, SITE_DIR)
 KINDS = {"same", "renamed", "section-fallback"}
 errors = []
 
@@ -67,7 +69,7 @@ def main():
             err(f"{old}: target {url} is not on {SITES[pkg]}")
         if url == SITES[pkg] and old != f"{pkg}/index.html":
             err(f"{old}: redirects to the site home")
-        path = os.path.join(ROOT, old)
+        path = os.path.join(SITE, old)
         if not os.path.isfile(path):
             err(f"{old}: stub missing")
             continue
@@ -87,21 +89,21 @@ def main():
         for path, status, _ in load_inventory(pkg):
             if is_page(path) and status == "200" and f"{pkg}/{stub_rel(path)}" not in olds:
                 err(f"{pkg}/{path}: old page has no redirect row")
-        for d, _, files in os.walk(os.path.join(ROOT, pkg)):
+        for d, _, files in os.walk(os.path.join(SITE, pkg)):
             for f in files:
-                rel = os.path.relpath(os.path.join(d, f), ROOT)
+                rel = os.path.relpath(os.path.join(d, f), SITE)
                 if rel not in olds:
                     err(f"{rel}: stub without a redirects.csv row")
 
-    nf = open(os.path.join(ROOT, "404.html")).read()
+    nf = open(os.path.join(SITE, "404.html")).read()
     m = re.search(r"var sites = (\{.*?\});", nf, re.S)
     if not m or json.loads(m.group(1)) != SITES:
         err("404.html: package map does not match tools/sites.py")
-    idx = open(os.path.join(ROOT, "index.html")).read()
+    idx = open(os.path.join(SITE, "index.html")).read()
     for pkg, url in SITES.items():
         if f'href="{url}"' not in idx:
             err(f"index.html: no link to {url}")
-    if not os.path.isfile(os.path.join(ROOT, ".nojekyll")):
+    if not os.path.isfile(os.path.join(SITE, ".nojekyll")):
         err(".nojekyll missing")
 
     n_ok = 0

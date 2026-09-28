@@ -2,6 +2,9 @@
 
 OLD_ORIGIN = "https://bart-turczynski.github.io"
 
+# GitHub Pages serves main:/docs, so everything published lives under this directory.
+SITE_DIR = "docs"
+
 # package prefix on the old user site -> canonical docs root (always ends in "/")
 SITES = {
     "rurl": "https://bart-turczynski.gitlab.io/rurl/",

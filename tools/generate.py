@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Generate the static redirect site from redirects.csv (stdlib only).
 
-Writes, relative to the repo root:
+Writes, relative to the published site directory (docs/):
   <old_path>        one stub per redirects.csv row (meta refresh + canonical + JS
                     location.replace that keeps the #fragment + visible link)
   404.html          maps any other /<pkg>/<rest> to <new root><rest> via JS
-  index.html        lists the packages and their canonical docs
   .nojekyll
+
+docs/index.html is hand-written and not touched here.
 
 Stale stubs under a package prefix (files no longer in redirects.csv) are removed.
 
@@ -19,9 +20,10 @@ import sys
 from html import escape
 
 sys.path.insert(0, os.path.dirname(__file__))
-from sites import SITES  # noqa: E402
+from sites import SITE_DIR, SITES  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SITE = os.path.join(ROOT, SITE_DIR)
 
 STUB = """<!DOCTYPE html>
 <html lang="en">
@@ -75,29 +77,6 @@ body {{ font: 16px/1.5 system-ui, sans-serif; max-width: 40rem; margin: 3rem aut
 </html>
 """
 
-INDEX = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bart Turczynski: R packages</title>
-<style>
-:root {{ color-scheme: light dark; }}
-body {{ font: 16px/1.5 system-ui, sans-serif; max-width: 40rem; margin: 3rem auto; padding: 0 16px; }}
-</style>
-</head>
-<body>
-<h1>R package documentation</h1>
-<p>The documentation for these packages moved to GitLab Pages. Old links under this
-site redirect to the equivalent page there.</p>
-<ul>
-{items}
-</ul>
-</body>
-</html>
-"""
-
-
 def items():
     return "\n".join(f'<li><a href="{escape(u)}">{escape(p)}</a></li>' for p, u in SITES.items())
 
@@ -108,7 +87,7 @@ def stub_html(old_path, url):
 
 
 def write(rel, text):
-    path = os.path.join(ROOT, rel)
+    path = os.path.join(SITE, rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w") as fh:
         fh.write(text)
@@ -125,15 +104,14 @@ def main():
         write(old, stub_html(old, r["new_url"]))
         wanted.add(old)
     for pkg in SITES:  # drop stubs whose rows were removed
-        for d, _, files in os.walk(os.path.join(ROOT, pkg)):
+        for d, _, files in os.walk(os.path.join(SITE, pkg)):
             for f in files:
-                rel = os.path.relpath(os.path.join(d, f), ROOT)
+                rel = os.path.relpath(os.path.join(d, f), SITE)
                 if rel not in wanted:
                     os.remove(os.path.join(d, f))
     write("404.html", NOT_FOUND.format(sites=json.dumps(SITES, indent=2), items=items()))
-    write("index.html", INDEX.format(items=items()))
     write(".nojekyll", "")
-    print(f"{len(rows)} stubs + 404.html + index.html + .nojekyll", file=sys.stderr)
+    print(f"{len(rows)} stubs + 404.html + .nojekyll", file=sys.stderr)
 
 
 if __name__ == "__main__":
