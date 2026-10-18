@@ -8,6 +8,13 @@ repos:
       - id: trailing-whitespace
       - id: check-merge-conflict
       - id: check-yaml
+        exclude: ^pnpm-lock\.yaml$
+      # pnpm 12 writes the lockfile as two YAML documents (pnpm itself, then
+      # the project), so only that file is allowed more than one.
+      - id: check-yaml
+        name: check yaml (pnpm lockfile)
+        args: ['--allow-multiple-documents']
+        files: ^pnpm-lock\.yaml$
       - id: check-toml
       - id: mixed-line-ending
       - id: check-case-conflict
