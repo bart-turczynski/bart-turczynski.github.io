@@ -3,7 +3,8 @@
 #
 # GitHub Actions provisioned toolchains with `uses:` steps (actions/setup-node,
 # pnpm/action-setup). GitLab has no action ecosystem, so the job starts from a
-# Docker image that already carries Node and enables pnpm through corepack.
+# Docker image that already carries Node and enables pnpm through corepack
+# (installed from npm, since Node 26 images no longer ship it).
 # Nothing cross-checks the pins for you: keep the image tag in step with
 # `.node-version`, and the corepack pin with `packageManager` in package.json.
 
@@ -18,7 +19,7 @@ verify:
   stage: verify
   # Not the -slim variant: `pnpm check` also runs the Python redirect
   # self-check (tools/check.py), and the full image ships python3.
-  image: node:24-bookworm
+  image: node:26-trixie
   variables:
     # GitLab only caches paths under $CI_PROJECT_DIR, and pnpm's
     # content-addressable store defaults to $HOME — so move it into the build
@@ -40,6 +41,8 @@ verify:
     - if: $CI_PIPELINE_SOURCE == "web"
     - if: $CI_PIPELINE_SOURCE == "api"
   before_script:
+    # Node 26 images no longer bundle corepack, so install a pinned copy first.
+    - npm install -g corepack@0.36.0
     - corepack enable && corepack prepare pnpm@11 --activate
     - pnpm config set store-dir "$PNPM_STORE_DIR"
     - node --version && pnpm --version
