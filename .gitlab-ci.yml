@@ -65,7 +65,7 @@ verify:
 
 renovate:
   stage: maintenance
-  image: renovate/renovate:41
+  image: renovate/renovate:44
   rules:
     # Blocking on a schedule: once a token exists, a renovate failure is a real
     # failure and must be visible. The missing-token case is handled in
