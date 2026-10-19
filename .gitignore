@@ -3,7 +3,6 @@
 *.log
 .DS_Store
 
-.fp/
 _scratch/
 
 # Machine output: logs, build junk, agent working files. Deletable at any
@@ -26,5 +25,4 @@ __pycache__/
 *.pyc
 
 # Fiberplane local issue tracking
-.fp/*
-!.fp/remote.toml
+.fp/
